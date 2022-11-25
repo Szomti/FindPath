@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#FFFFFF"
     android:padding="10dp">
 
     <TextView
@@ -21,11 +22,9 @@
         android:id="@+id/setupCityList"
         app:layout_constraintTop_toBottomOf="@id/setupHeader"
         android:layout_marginTop="25dp"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_background"
-        android:padding="8dp"
         android:spinnerMode="dropdown" />
 
     <EditText
@@ -35,12 +34,68 @@
         android:ems="10"
         android:layout_marginTop="25dp"
         android:inputType="textPersonName"
-        android:hint="City"
+        android:hint="New City Name"
+        android:textSize="18sp"
         android:background="@drawable/border_background"
         android:padding="8dp"
         android:textColorHint="#AEAEAE"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/setupCityList"/>
+        app:layout_constraintTop_toBottomOf="@id/setupCityList"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/setupSaveCityNameChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:backgroundTint="#FF22BB22"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setupCityNameEdit"/>
+
+    <Spinner
+        android:id="@+id/setupCityListFirstItem"
+        app:layout_constraintTop_toBottomOf="@id/setupSaveCityNameChange"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_background"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/setupCityListSecondItem"
+        app:layout_constraintTop_toBottomOf="@id/setupCityListFirstItem"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_background"
+        android:spinnerMode="dropdown" />
+
+    <EditText
+        android:id="@+id/setupDistanceBetweenCitiesChange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="25dp"
+        android:inputType="number"
+        android:hint="New City Name"
+        android:textSize="18sp"
+        android:background="@drawable/border_background"
+        android:padding="8dp"
+        android:textColorHint="#AEAEAE"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/setupCityListSecondItem"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/setupSaveCityDistanceChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:backgroundTint="#FF22BB22"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setupDistanceBetweenCitiesChange"/>
 
     <Button
         android:id="@+id/setupFinishBtn"
