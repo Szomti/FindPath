@@ -1,10 +1,13 @@
 package com.example.findpath
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import com.example.findpath.databinding.ActivityMainBinding
 import com.example.findpath.databinding.ActivitySetupBinding
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +23,32 @@ class MainActivity : AppCompatActivity() {
         setup.setupFinishBtn.setOnClickListener {
             setContentView(main.root)
         }
+
+        setup.setupSaveCityNameChange.setOnClickListener {
+            var correct = true
+            for(item in citiesList){
+                if(item == setup.setupCityNameEdit.text.toString()) correct = false
+            }
+            if(correct) {
+                citiesList[setup.setupCityList.selectedItemId.toInt()] = setup.setupCityNameEdit.text.toString()
+            }
+        }
+
+        setup.setupCityListFirstItem.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parentView: AdapterView<*>?,
+                    selectedItemView: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    setup.setupDistanceBetweenCitiesChange.isEnabled = id != setup.setupCityListSecondItem.selectedItemId
+                }
+
+                override fun onNothingSelected(parentView: AdapterView<*>?) {
+                    // your code here
+                }
+            }
     }
 
     private fun setupListsInit(setup: ActivitySetupBinding, list: MutableList<String>) {
