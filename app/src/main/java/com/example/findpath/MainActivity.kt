@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(setup.root)
 
         val citiesList = generateDefaultList()
-        val graph: MutableList<MutableList<Int>> = MutableList(citiesList.size) {MutableList(citiesList.size) {0}}
+        val graph: MutableList<MutableList<Int>> = MutableList(citiesList.size) {MutableList(citiesList.size) {Int.MAX_VALUE}}
 
         setupListsInit(setup, citiesList)
 
@@ -72,6 +72,10 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onNothingSelected(parentView: AdapterView<*>?) { }
             }
+
+        setup.setupSaveCityDistanceChange.setOnClickListener {
+            graph[setup.setupCityListFirstItem.selectedItemId.toInt()][setup.setupCityListSecondItem.selectedItemId.toInt()] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
+        }
     }
 
     private fun setupListsInit(setup: ActivitySetupBinding, list: MutableList<String>) {

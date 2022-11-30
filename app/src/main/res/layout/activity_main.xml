@@ -48,6 +48,7 @@
         app:fabCustomSize="50dp"
         app:borderWidth="0dp"
         android:layout_margin="10dp"
-        app:elevation="0dp" />
+        app:elevation="0dp"
+        android:contentDescription="Go To Setup Btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
