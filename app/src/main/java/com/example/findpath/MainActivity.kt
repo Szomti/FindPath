@@ -1,5 +1,6 @@
 package com.example.findpath
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -17,11 +18,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(setup.root)
 
         val citiesList = generateDefaultList()
+        val graph: MutableList<MutableList<Int>> = MutableList(citiesList.size) {MutableList(citiesList.size) {0}}
 
         setupListsInit(setup, citiesList)
 
         setup.setupFinishBtn.setOnClickListener {
             setContentView(main.root)
+            mainListsInit(main, citiesList)
         }
 
         setup.setupSaveCityNameChange.setOnClickListener {
@@ -45,9 +48,54 @@ class MainActivity : AppCompatActivity() {
                     setup.setupDistanceBetweenCitiesChange.isEnabled = id != setup.setupCityListSecondItem.selectedItemId
                 }
 
-                override fun onNothingSelected(parentView: AdapterView<*>?) {
-                    // your code here
+                override fun onNothingSelected(parentView: AdapterView<*>?) { }
+            }
+
+        setup.setupCityListSecondItem.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parentView: AdapterView<*>?,
+                    selectedItemView: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    setup.setupDistanceBetweenCitiesChange.isEnabled = id != setup.setupCityListFirstItem.selectedItemId
+                    if(id != setup.setupCityListFirstItem.selectedItemId){
+                        setup.setupDistanceBetweenCitiesChange.setText("")
+                    }else{
+                        setup.setupDistanceBetweenCitiesChange.setText("-1")
+                    }
                 }
+
+                override fun onNothingSelected(parentView: AdapterView<*>?) { }
+            }
+
+        main.mainCityListFirstItem.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parentView: AdapterView<*>?,
+                    selectedItemView: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    main.mainFindPath.isEnabled = id != main.mainCityListSecondItem.selectedItemId
+                }
+
+                override fun onNothingSelected(parentView: AdapterView<*>?) { }
+            }
+
+        main.mainCityListSecondItem.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parentView: AdapterView<*>?,
+                    selectedItemView: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    main.mainFindPath.isEnabled = id != main.mainCityListFirstItem.selectedItemId
+                }
+
+                override fun onNothingSelected(parentView: AdapterView<*>?) { }
             }
     }
 
@@ -59,11 +107,33 @@ class MainActivity : AppCompatActivity() {
         setup.setupCityListSecondItem.setSelection(1)
     }
 
+    private fun mainListsInit(main: ActivityMainBinding, list: MutableList<String>) {
+        val adapter = ArrayAdapter(this, R.layout.spinner_text, list)
+        main.mainCityListFirstItem.adapter = adapter
+        main.mainCityListSecondItem.adapter = adapter
+        main.mainCityListSecondItem.setSelection(1)
+    }
+
     private fun generateDefaultList(): MutableList<String> {
         val generatedList: MutableList<String> = mutableListOf()
         for(i in 1..15){
             generatedList.add("City$i")
         }
         return generatedList
+    }
+
+    private fun createItemSelectedListener(main: ActivityMainBinding) {
+        object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parentView: AdapterView<*>?,
+                selectedItemView: View?,
+                position: Int,
+                id: Long
+            ) {
+                main.mainFindPath.isEnabled = id != main.mainCityListSecondItem.selectedItemId
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>?) { }
+        }
     }
 }

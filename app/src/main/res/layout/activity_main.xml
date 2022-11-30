@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:gravity="bottom|center_horizontal">
+    android:background="#FFFFFF"
+    android:padding="10dp">
 
+    <TextView
+        android:id="@+id/mainHeader"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="24sp"/>
 
+    <Spinner
+        android:id="@+id/mainCityListFirstItem"
+        app:layout_constraintTop_toBottomOf="@+id/mainHeader"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_background"
+        android:spinnerMode="dropdown" />
 
-</LinearLayout>
+    <Spinner
+        android:id="@+id/mainCityListSecondItem"
+        app:layout_constraintTop_toBottomOf="@id/mainCityListFirstItem"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_background"
+        android:spinnerMode="dropdown" />
+
+    <Button
+        android:id="@+id/mainFindPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Path"
+        android:backgroundTint="#FF5555FF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainCityListSecondItem"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
