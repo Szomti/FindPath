@@ -24,7 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         setup.setupFinishBtn.setOnClickListener {
             setContentView(main.root)
-            mainListsInit(main, citiesList)
+        }
+
+        main.mainGoToSetup.setOnClickListener {
+            setContentView(setup.root)
         }
 
         setup.setupSaveCityNameChange.setOnClickListener {
@@ -69,34 +72,6 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onNothingSelected(parentView: AdapterView<*>?) { }
             }
-
-        main.mainCityListFirstItem.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parentView: AdapterView<*>?,
-                    selectedItemView: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    main.mainFindPath.isEnabled = id != main.mainCityListSecondItem.selectedItemId
-                }
-
-                override fun onNothingSelected(parentView: AdapterView<*>?) { }
-            }
-
-        main.mainCityListSecondItem.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parentView: AdapterView<*>?,
-                    selectedItemView: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    main.mainFindPath.isEnabled = id != main.mainCityListFirstItem.selectedItemId
-                }
-
-                override fun onNothingSelected(parentView: AdapterView<*>?) { }
-            }
     }
 
     private fun setupListsInit(setup: ActivitySetupBinding, list: MutableList<String>) {
@@ -107,33 +82,11 @@ class MainActivity : AppCompatActivity() {
         setup.setupCityListSecondItem.setSelection(1)
     }
 
-    private fun mainListsInit(main: ActivityMainBinding, list: MutableList<String>) {
-        val adapter = ArrayAdapter(this, R.layout.spinner_text, list)
-        main.mainCityListFirstItem.adapter = adapter
-        main.mainCityListSecondItem.adapter = adapter
-        main.mainCityListSecondItem.setSelection(1)
-    }
-
     private fun generateDefaultList(): MutableList<String> {
         val generatedList: MutableList<String> = mutableListOf()
         for(i in 1..15){
             generatedList.add("City$i")
         }
         return generatedList
-    }
-
-    private fun createItemSelectedListener(main: ActivityMainBinding) {
-        object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parentView: AdapterView<*>?,
-                selectedItemView: View?,
-                position: Int,
-                id: Long
-            ) {
-                main.mainFindPath.isEnabled = id != main.mainCityListSecondItem.selectedItemId
-            }
-
-            override fun onNothingSelected(parentView: AdapterView<*>?) { }
-        }
     }
 }

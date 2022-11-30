@@ -16,27 +16,18 @@
         android:text="Home"
         android:textColor="@color/black"
         android:gravity="center"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-    <Spinner
-        android:id="@+id/mainCityListFirstItem"
-        app:layout_constraintTop_toBottomOf="@+id/mainHeader"
-        android:layout_marginTop="25dp"
+    <com.google.android.material.divider.MaterialDivider
+        app:layout_constraintBottom_toTopOf="@id/mainFindPath"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_background"
-        android:spinnerMode="dropdown" />
-
-    <Spinner
-        android:id="@+id/mainCityListSecondItem"
-        app:layout_constraintTop_toBottomOf="@id/mainCityListFirstItem"
-        android:layout_marginTop="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_background"
-        android:spinnerMode="dropdown" />
+        app:dividerColor="#EAEAEA"
+        android:layout_marginBottom="2dp" />
 
     <Button
+        android:layout_marginTop="8dp"
         android:id="@+id/mainFindPath"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,6 +35,19 @@
         android:backgroundTint="#FF5555FF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainCityListSecondItem"/>
+        app:layout_constraintTop_toBottomOf="@+id/mainHeader"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mainGoToSetup"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/setup_img"
+        android:backgroundTint="#DADADA"
+        app:fabCustomSize="50dp"
+        app:borderWidth="0dp"
+        android:layout_margin="10dp"
+        app:elevation="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
