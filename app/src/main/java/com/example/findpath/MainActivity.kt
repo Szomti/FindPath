@@ -79,7 +79,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         main.mainFindPath.setOnClickListener {
-            TSP(graph).shortestDistance()
+            var resultPathString = ""
+            val resultPath = TSP(graph).shortestDistance()
+            for(index in resultPath.getPath()){
+                resultPathString += "${citiesList[index]}\n"
+            }
+            resultPathString += "Distance: ${resultPath.getDistance()}"
+            main.mainPathResult.text = resultPathString
         }
     }
 
