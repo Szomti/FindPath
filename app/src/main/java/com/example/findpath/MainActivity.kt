@@ -1,6 +1,5 @@
 package com.example.findpath
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -18,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(setup.root)
 
         val citiesList = generateDefaultList()
-        val graph: MutableList<MutableList<Int>> = MutableList(citiesList.size) {MutableList(citiesList.size) {Int.MAX_VALUE}}
+        val graph: MutableList<MutableList<Int>> = graphDistanceInit(citiesList.size)
 
         setupListsInit(setup, citiesList)
 
@@ -74,8 +73,26 @@ class MainActivity : AppCompatActivity() {
             }
 
         setup.setupSaveCityDistanceChange.setOnClickListener {
-            graph[setup.setupCityListFirstItem.selectedItemId.toInt()][setup.setupCityListSecondItem.selectedItemId.toInt()] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
+            graph[setup.setupCityListFirstItem.selectedItemId.toInt()+1][setup.setupCityListSecondItem.selectedItemId.toInt()+1] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
+            graph[setup.setupCityListSecondItem.selectedItemId.toInt()+1][setup.setupCityListFirstItem.selectedItemId.toInt()+1] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
+            println(graph)
         }
+
+        main.mainFindPath.setOnClickListener {
+            TSP(graph).shortestDistance()
+        }
+    }
+
+    private fun graphDistanceInit(size: Int): MutableList<MutableList<Int>> {
+        val correctedSize = size + 1
+        val tempGraph: MutableList<MutableList<Int>> = MutableList(correctedSize) {MutableList(correctedSize) {500}}
+        for (i in 0 until correctedSize){
+            tempGraph[0][i] = 0
+            tempGraph[i][0] = 0
+            tempGraph[i][i] = 0
+        }
+        println(tempGraph)
+        return tempGraph
     }
 
     private fun setupListsInit(setup: ActivitySetupBinding, list: MutableList<String>) {
@@ -88,7 +105,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun generateDefaultList(): MutableList<String> {
         val generatedList: MutableList<String> = mutableListOf()
-        for(i in 1..15){
+        for(i in 1..8){
             generatedList.add("City$i")
         }
         return generatedList
