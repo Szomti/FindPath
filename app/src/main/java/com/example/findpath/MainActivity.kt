@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.findpath.databinding.ActivityMainBinding
 import com.example.findpath.databinding.ActivitySetupBinding
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         main.mainGoToSetup.setOnClickListener {
+            setupListsInit(setup, citiesList)
             setContentView(setup.root)
         }
 
@@ -34,8 +36,11 @@ class MainActivity : AppCompatActivity() {
             for(item in citiesList){
                 if(item == setup.setupCityNameEdit.text.toString()) correct = false
             }
+            if(setup.setupCityNameEdit.text.toString().trim() == "") correct = false
             if(correct) {
                 citiesList[setup.setupCityList.selectedItemId.toInt()] = setup.setupCityNameEdit.text.toString()
+                Toast.makeText(applicationContext, "Saved New Name", Toast.LENGTH_SHORT).show()
+                refreshList(setup, citiesList)
             }
         }
 
@@ -48,6 +53,11 @@ class MainActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     setup.setupDistanceBetweenCitiesChange.isEnabled = id != setup.setupCityListSecondItem.selectedItemId
+                    if(id != setup.setupCityListSecondItem.selectedItemId){
+                        setup.setupDistanceBetweenCitiesChange.setText(graph[setup.setupCityListSecondItem.selectedItemId.toInt()+1][setup.setupCityListFirstItem.selectedItemId.toInt()+1].toString())
+                    }else{
+                        setup.setupDistanceBetweenCitiesChange.setText("-1")
+                    }
                 }
 
                 override fun onNothingSelected(parentView: AdapterView<*>?) { }
@@ -63,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     setup.setupDistanceBetweenCitiesChange.isEnabled = id != setup.setupCityListFirstItem.selectedItemId
                     if(id != setup.setupCityListFirstItem.selectedItemId){
-                        setup.setupDistanceBetweenCitiesChange.setText("")
+                        setup.setupDistanceBetweenCitiesChange.setText(graph[setup.setupCityListFirstItem.selectedItemId.toInt()+1][setup.setupCityListSecondItem.selectedItemId.toInt()+1].toString())
                     }else{
                         setup.setupDistanceBetweenCitiesChange.setText("-1")
                     }
@@ -73,9 +83,14 @@ class MainActivity : AppCompatActivity() {
             }
 
         setup.setupSaveCityDistanceChange.setOnClickListener {
-            graph[setup.setupCityListFirstItem.selectedItemId.toInt()+1][setup.setupCityListSecondItem.selectedItemId.toInt()+1] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
-            graph[setup.setupCityListSecondItem.selectedItemId.toInt()+1][setup.setupCityListFirstItem.selectedItemId.toInt()+1] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
-            println(graph)
+            if(setup.setupDistanceBetweenCitiesChange.text.toString().toInt() > 0){
+                graph[setup.setupCityListFirstItem.selectedItemId.toInt()+1][setup.setupCityListSecondItem.selectedItemId.toInt()+1] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
+                graph[setup.setupCityListSecondItem.selectedItemId.toInt()+1][setup.setupCityListFirstItem.selectedItemId.toInt()+1] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
+                println(graph)
+                Toast.makeText(applicationContext, "Saved New Distance", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(applicationContext, "Incorrect Distance - Not Saved", Toast.LENGTH_SHORT).show()
+            }
         }
 
         main.mainFindPath.setOnClickListener {
@@ -119,6 +134,13 @@ class MainActivity : AppCompatActivity() {
         setup.setupCityListFirstItem.adapter = adapter
         setup.setupCityListSecondItem.adapter = adapter
         setup.setupCityListSecondItem.setSelection(1)
+        setup.setupCityNameEdit.setText("")
+    }
+
+    private fun refreshList(setup: ActivitySetupBinding, list: MutableList<String>){
+        val adapter = ArrayAdapter(this, R.layout.spinner_text, list)
+        setup.setupCityList.adapter = adapter
+        setup.setupCityNameEdit.setText("")
     }
 
     private fun generateDefaultList(): MutableList<String> {
