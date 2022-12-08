@@ -2,7 +2,7 @@ package com.example.findpath
 
 class ResultPath(
     private val distance: Int,
-    private  val path: MutableList<Int>
+    private val path: IntArray
 ) {
     fun getDistance(): Int {
         return distance
@@ -11,7 +11,7 @@ class ResultPath(
     fun getPath(): MutableList<Int> {
         val correctedPath: MutableList<Int> = mutableListOf()
         for(element in path){
-            correctedPath.add(element-1)
+            correctedPath.add(element)
         }
         return correctedPath
     }

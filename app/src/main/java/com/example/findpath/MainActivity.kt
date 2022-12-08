@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         main.mainFindPath.setOnClickListener {
             var resultPathString = ""
-            val resultPath = TSP(graph).shortestDistance()
+            val resultPath = SimpleTSP(graph).findPath()
             for(index in resultPath.getPath()){
                 resultPathString += "${citiesList[index]}\n"
             }
@@ -90,15 +90,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun graphDistanceInit(size: Int): MutableList<MutableList<Int>> {
-        val correctedSize = size + 1
-        val tempGraph: MutableList<MutableList<Int>> = MutableList(correctedSize) {MutableList(correctedSize) {500}}
-        for (i in 0 until correctedSize){
+        var tempGraph: MutableList<MutableList<Int>> = MutableList(size) {MutableList(size) {500}}
+        tempGraph = randomDistance(tempGraph)
+        for (i in 0 until size){
             tempGraph[0][i] = 0
             tempGraph[i][0] = 0
             tempGraph[i][i] = 0
         }
         println(tempGraph)
         return tempGraph
+    }
+
+    private fun randomDistance(graph: MutableList<MutableList<Int>>): MutableList<MutableList<Int>>{
+        val graphSize = graph.size
+        for(i in 0 until graphSize){
+            for(j in 0 until graphSize){
+                val randomDistance = (25..200).random()
+                graph[i][j] = randomDistance
+                graph[j][i] = randomDistance
+            }
+        }
+        return graph
     }
 
     private fun setupListsInit(setup: ActivitySetupBinding, list: MutableList<String>) {
