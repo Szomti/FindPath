@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home"
+        android:text="@string/mainHeader"
         android:textColor="@color/black"
         android:gravity="center"
         android:textSize="24sp"
@@ -27,11 +26,11 @@
         android:layout_marginBottom="2dp" />
 
     <Button
-        android:layout_marginTop="8dp"
         android:id="@+id/mainFindPath"
+        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Find Path"
+        android:text="@string/mainFindPath"
         android:backgroundTint="#FF5555FF"
         app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintLeft_toLeftOf="@+id/mainHeader"
@@ -39,11 +38,11 @@
         app:layout_constraintTop_toBottomOf="@+id/mainHeader"/>
 
     <Button
-        android:layout_marginTop="8dp"
         android:id="@+id/mainSave"
+        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/mainSave"
         android:backgroundTint="#FF5555FF"
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintLeft_toLeftOf="@+id/mainHeader"
@@ -72,6 +71,6 @@
         app:borderWidth="0dp"
         android:layout_margin="10dp"
         app:elevation="0dp"
-        android:contentDescription="Go To Setup Btn" />
+        android:contentDescription="@string/mainGoToSetup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

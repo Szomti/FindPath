@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Find Path</string>
+
+    <string name="setupHeader">Setup</string>
+    <string name="setupNameHeader">Edit Name</string>
+    <string name="setupCityNameEdit">New City Name</string>
+    <string name="setupSaveCityNameChange">Save</string>
+    <string name="setupDistanceHeader">Edit Distance</string>
+    <string name="setupDistanceBetweenCitiesChange">Distance</string>
+    <string name="setupSaveCityDistanceChange">Save</string>
+    <string name="setupFinishBtn">Finish</string>
+
+    <string name="mainHeader">Home</string>
+    <string name="mainFindPath">Find Path</string>
+    <string name="mainSave">Save IMG</string>
+    <string name="mainGoToSetup">Go To Setup Btn</string>
 </resources>
