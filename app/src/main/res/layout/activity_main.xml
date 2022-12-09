@@ -33,8 +33,21 @@
         android:layout_height="wrap_content"
         android:text="Find Path"
         android:backgroundTint="#FF5555FF"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintLeft_toLeftOf="@+id/mainHeader"
+        app:layout_constraintRight_toRightOf="@+id/mainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/mainHeader"/>
+
+    <Button
+        android:layout_marginTop="8dp"
+        android:id="@+id/mainSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:backgroundTint="#FF5555FF"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintLeft_toLeftOf="@+id/mainHeader"
+        app:layout_constraintRight_toRightOf="@+id/mainHeader"
         app:layout_constraintTop_toBottomOf="@+id/mainHeader"/>
 
     <TextView
