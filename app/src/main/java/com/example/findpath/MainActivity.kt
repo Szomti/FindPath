@@ -31,15 +31,17 @@ class MainActivity : AppCompatActivity() {
 
         setup.setupResetNamesBtn.setOnClickListener {
             citiesList = ListsHelper().generateDefaultList()
-            ListsHelper().refreshList(this, setup, citiesList)
+            shortFullRefresh(setup, citiesList)
         }
 
         setup.setupResetDistanceBtn.setOnClickListener {
             graph = CitiesHelper().distanceInit(citiesList)
+            shortFullRefresh(setup, citiesList)
         }
 
         setup.setupRandomDistanceBtn.setOnClickListener {
             graph = CitiesHelper().randomDistance(graph)
+            shortFullRefresh(setup, citiesList)
         }
 
         setup.setupSaveCityNameChange.setOnClickListener {
@@ -52,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             if(correct) {
                 citiesList[setup.setupCityList.selectedItemId.toInt()] = newNameText
                 Toast.makeText(applicationContext, "Saved New Name: $newNameText", Toast.LENGTH_SHORT).show()
-                ListsHelper().refreshList(this, setup, citiesList)
+                shortFullRefresh(setup, citiesList)
             }
         }
 
@@ -65,11 +67,10 @@ class MainActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     val distanceInput = setup.setupDistanceBetweenCitiesChange
-                    val firstId = setup.setupCityListFirstItem.selectedItemId
                     val secondId = setup.setupCityListSecondItem.selectedItemId
                     distanceInput.isEnabled = id != secondId
                     if(id != secondId){
-                        distanceInput.setText(graph[secondId.toInt()+1][firstId.toInt()+1].toString())
+                        distanceInput.setText(graph[secondId.toInt()][id.toInt()].toString())
                     }else{
                         distanceInput.setText("-1")
                     }
@@ -88,10 +89,9 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     val distanceInput = setup.setupDistanceBetweenCitiesChange
                     val firstId = setup.setupCityListFirstItem.selectedItemId
-                    val secondId = setup.setupCityListSecondItem.selectedItemId
                     distanceInput.isEnabled = id != firstId
                     if(id != firstId){
-                        distanceInput.setText(graph[firstId.toInt()+1][secondId.toInt()+1].toString())
+                        distanceInput.setText(graph[firstId.toInt()][id.toInt()].toString())
                     }else{
                         distanceInput.setText("-1")
                     }
@@ -103,8 +103,8 @@ class MainActivity : AppCompatActivity() {
         setup.setupSaveCityDistanceChange.setOnClickListener {
             val distance = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
             if(distance > 0){
-                val firstIdPlusOne = setup.setupCityListFirstItem.selectedItemId.toInt()+1
-                val secondIdPlusOne = setup.setupCityListSecondItem.selectedItemId.toInt()+1
+                val firstIdPlusOne = setup.setupCityListFirstItem.selectedItemId.toInt()
+                val secondIdPlusOne = setup.setupCityListSecondItem.selectedItemId.toInt()
                 graph[firstIdPlusOne][secondIdPlusOne] = distance
                 graph[secondIdPlusOne][firstIdPlusOne] = distance
                 println(graph)
@@ -132,5 +132,18 @@ class MainActivity : AppCompatActivity() {
             val screenshotTime = System.currentTimeMillis()
             Screenshot().saveImage(screenshot, screenshotTime.toString(), contentResolver)
         }
+    }
+
+    private fun shortFullRefresh(setup: ActivitySetupBinding, citiesList:MutableList<String>){
+        ListsHelper().fullRefresh(
+            this,
+            setup,
+            citiesList,
+            SpinnersSelectedId(
+                setup.setupCityList.selectedItemId,
+                setup.setupCityListFirstItem.selectedItemId,
+                setup.setupCityListSecondItem.selectedItemId,
+            ),
+        )
     }
 }

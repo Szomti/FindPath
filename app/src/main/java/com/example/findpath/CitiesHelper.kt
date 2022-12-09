@@ -19,6 +19,8 @@ class CitiesHelper {
                 val randomDistance = (25..200).random()
                 graph[i][j] = randomDistance
                 graph[j][i] = randomDistance
+                graph[i][i] = 0
+                graph[j][j] = 0
             }
         }
         return graph
