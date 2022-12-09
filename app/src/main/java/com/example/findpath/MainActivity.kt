@@ -3,7 +3,6 @@ package com.example.findpath
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.findpath.databinding.ActivityMainBinding
@@ -16,38 +15,44 @@ class MainActivity : AppCompatActivity() {
         val main = ActivityMainBinding.inflate(layoutInflater)
         setContentView(setup.root)
 
-        val citiesList = generateDefaultList()
+        var citiesList = ListsHelper().generateDefaultList()
         var graph: MutableList<MutableList<Int>> = CitiesHelper().distanceInit(citiesList)
 
-        setupListsInit(setup, citiesList)
+        ListsHelper().setupListsInit(this, setup, citiesList)
 
         setup.setupFinishBtn.setOnClickListener {
             setContentView(main.root)
         }
 
         main.mainGoToSetup.setOnClickListener {
-            setupListsInit(setup, citiesList)
+            ListsHelper().setupListsInit(this, setup, citiesList)
             setContentView(setup.root)
         }
 
-        setup.setupResetBtn.setOnClickListener {
+        setup.setupResetNamesBtn.setOnClickListener {
+            citiesList = ListsHelper().generateDefaultList()
+            ListsHelper().refreshList(this, setup, citiesList)
+        }
+
+        setup.setupResetDistanceBtn.setOnClickListener {
             graph = CitiesHelper().distanceInit(citiesList)
         }
 
-        setup.setupRandomBtn.setOnClickListener {
+        setup.setupRandomDistanceBtn.setOnClickListener {
             graph = CitiesHelper().randomDistance(graph)
         }
 
         setup.setupSaveCityNameChange.setOnClickListener {
             var correct = true
+            val newNameText = setup.setupCityNameEdit.text.toString().trim()
             for(item in citiesList){
-                if(item == setup.setupCityNameEdit.text.toString()) correct = false
+                if(item == newNameText) correct = false
             }
-            if(setup.setupCityNameEdit.text.toString().trim() == "") correct = false
+            if(newNameText == "") correct = false
             if(correct) {
-                citiesList[setup.setupCityList.selectedItemId.toInt()] = setup.setupCityNameEdit.text.toString()
-                Toast.makeText(applicationContext, "Saved New Name: ${setup.setupCityNameEdit.text}", Toast.LENGTH_SHORT).show()
-                refreshList(setup, citiesList)
+                citiesList[setup.setupCityList.selectedItemId.toInt()] = newNameText
+                Toast.makeText(applicationContext, "Saved New Name: $newNameText", Toast.LENGTH_SHORT).show()
+                ListsHelper().refreshList(this, setup, citiesList)
             }
         }
 
@@ -59,11 +64,14 @@ class MainActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    setup.setupDistanceBetweenCitiesChange.isEnabled = id != setup.setupCityListSecondItem.selectedItemId
-                    if(id != setup.setupCityListSecondItem.selectedItemId){
-                        setup.setupDistanceBetweenCitiesChange.setText(graph[setup.setupCityListSecondItem.selectedItemId.toInt()+1][setup.setupCityListFirstItem.selectedItemId.toInt()+1].toString())
+                    val distanceInput = setup.setupDistanceBetweenCitiesChange
+                    val firstId = setup.setupCityListFirstItem.selectedItemId
+                    val secondId = setup.setupCityListSecondItem.selectedItemId
+                    distanceInput.isEnabled = id != secondId
+                    if(id != secondId){
+                        distanceInput.setText(graph[secondId.toInt()+1][firstId.toInt()+1].toString())
                     }else{
-                        setup.setupDistanceBetweenCitiesChange.setText("-1")
+                        distanceInput.setText("-1")
                     }
                 }
 
@@ -78,11 +86,14 @@ class MainActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    setup.setupDistanceBetweenCitiesChange.isEnabled = id != setup.setupCityListFirstItem.selectedItemId
-                    if(id != setup.setupCityListFirstItem.selectedItemId){
-                        setup.setupDistanceBetweenCitiesChange.setText(graph[setup.setupCityListFirstItem.selectedItemId.toInt()+1][setup.setupCityListSecondItem.selectedItemId.toInt()+1].toString())
+                    val distanceInput = setup.setupDistanceBetweenCitiesChange
+                    val firstId = setup.setupCityListFirstItem.selectedItemId
+                    val secondId = setup.setupCityListSecondItem.selectedItemId
+                    distanceInput.isEnabled = id != firstId
+                    if(id != firstId){
+                        distanceInput.setText(graph[firstId.toInt()+1][secondId.toInt()+1].toString())
                     }else{
-                        setup.setupDistanceBetweenCitiesChange.setText("-1")
+                        distanceInput.setText("-1")
                     }
                 }
 
@@ -90,11 +101,14 @@ class MainActivity : AppCompatActivity() {
             }
 
         setup.setupSaveCityDistanceChange.setOnClickListener {
-            if(setup.setupDistanceBetweenCitiesChange.text.toString().toInt() > 0){
-                graph[setup.setupCityListFirstItem.selectedItemId.toInt()+1][setup.setupCityListSecondItem.selectedItemId.toInt()+1] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
-                graph[setup.setupCityListSecondItem.selectedItemId.toInt()+1][setup.setupCityListFirstItem.selectedItemId.toInt()+1] = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
+            val distance = setup.setupDistanceBetweenCitiesChange.text.toString().toInt()
+            if(distance > 0){
+                val firstIdPlusOne = setup.setupCityListFirstItem.selectedItemId.toInt()+1
+                val secondIdPlusOne = setup.setupCityListSecondItem.selectedItemId.toInt()+1
+                graph[firstIdPlusOne][secondIdPlusOne] = distance
+                graph[secondIdPlusOne][firstIdPlusOne] = distance
                 println(graph)
-                Toast.makeText(applicationContext, "Saved New Distance: ${setup.setupDistanceBetweenCitiesChange.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Saved New Distance: $distance", Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(applicationContext, "Incorrect Distance - Not Saved", Toast.LENGTH_SHORT).show()
             }
@@ -118,28 +132,5 @@ class MainActivity : AppCompatActivity() {
             val screenshotTime = System.currentTimeMillis()
             Screenshot().saveImage(screenshot, screenshotTime.toString(), contentResolver)
         }
-    }
-
-    private fun setupListsInit(setup: ActivitySetupBinding, list: MutableList<String>) {
-        val adapter = ArrayAdapter(this, R.layout.spinner_text, list)
-        setup.setupCityList.adapter = adapter
-        setup.setupCityListFirstItem.adapter = adapter
-        setup.setupCityListSecondItem.adapter = adapter
-        setup.setupCityListSecondItem.setSelection(1)
-        setup.setupCityNameEdit.setText("")
-    }
-
-    private fun refreshList(setup: ActivitySetupBinding, list: MutableList<String>){
-        val adapter = ArrayAdapter(this, R.layout.spinner_text, list)
-        setup.setupCityList.adapter = adapter
-        setup.setupCityNameEdit.setText("")
-    }
-
-    private fun generateDefaultList(): MutableList<String> {
-        val generatedList: MutableList<String> = mutableListOf()
-        for(i in 1..8){
-            generatedList.add("City$i")
-        }
-        return generatedList
     }
 }
