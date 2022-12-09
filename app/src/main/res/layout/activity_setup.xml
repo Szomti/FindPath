@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/setupSaveCityNameChange"
-        android:backgroundTint="#FF22BB22"
+        android:backgroundTint="#FF5555FF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setupCityNameEdit"/>
@@ -130,10 +130,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/setupSaveCityDistanceChange"
-        android:backgroundTint="#FF22BB22"
+        android:backgroundTint="#FF5555FF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setupDistanceBetweenCitiesChange"/>
+
+    <Button
+        android:id="@+id/setupResetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setupResetBtn"
+        android:backgroundTint="#FFFF5555"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintTop_toBottomOf="@id/setupSaveCityDistanceChange"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/setupFinishBtn"/>
+
+    <Button
+        android:id="@+id/setupRandomBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setupRandomBtn"
+        android:backgroundTint="#FF33DD33"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintTop_toBottomOf="@id/setupSaveCityDistanceChange"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/setupFinishBtn"/>
 
     <Button
         android:id="@+id/setupFinishBtn"

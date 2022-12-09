@@ -8,6 +8,8 @@
     <string name="setupDistanceHeader">Edit Distance</string>
     <string name="setupDistanceBetweenCitiesChange">Distance</string>
     <string name="setupSaveCityDistanceChange">Save</string>
+    <string name="setupResetBtn">Reset</string>
+    <string name="setupRandomBtn">Random</string>
     <string name="setupFinishBtn">Finish</string>
 
     <string name="mainHeader">Home</string>
