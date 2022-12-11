@@ -129,8 +129,7 @@ class MainActivity : AppCompatActivity() {
 
         main.mainSave.setOnClickListener {
             val screenshot = Screenshot().takeScreenshotOfView(main.root, main.root.height, main.root.width)
-            val screenshotTime = System.currentTimeMillis()
-            Screenshot().saveImage(screenshot, screenshotTime.toString(), contentResolver)
+            Screenshot().saveImage(screenshot, contentResolver)
         }
     }
 
