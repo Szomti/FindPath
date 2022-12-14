@@ -1,14 +1,16 @@
 package com.example.findpath
 
 import android.content.ContentResolver
+import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
-import java.io.File
-import java.io.FileOutputStream
+import java.io.OutputStream
 
 class Screenshot {
     fun takeScreenshotOfView(view: View, height: Int, width: Int): Bitmap {
@@ -24,29 +26,32 @@ class Screenshot {
         return bitmap
     }
 
-    fun saveImage(finalBitmap: Bitmap, imageName: String, contentResolver: ContentResolver) {
-        val root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
-        val myDir = File(root)
-        myDir.mkdirs()
-        val fileName = "screenshot-$imageName.jpg"
-        val file = File(myDir, fileName)
-        if (file.exists()) {
-            println("File with that name exists")
-            return
+    fun saveImage(bitmap: Bitmap, contentResolver: ContentResolver): Uri? {
+        val filename = "SCREENSHOT_${System.currentTimeMillis()}.jpg"
+        var fos: OutputStream?
+        var imageUri: Uri?
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                put(MediaStore.MediaColumns.IS_PENDING, 1)
+            }
         }
-        try {
-            val out = FileOutputStream(file)
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-            MediaStore.Images.Media.insertImage(
-                contentResolver,
-                finalBitmap,
-                imageName,
-                "Image of $imageName"
-            )
-            out.flush()
-            out.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
+
+        contentResolver.also { resolver ->
+            imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            fos = imageUri?.let { resolver.openOutputStream(it) }
         }
+
+        fos?.use { bitmap.compress(Bitmap.CompressFormat.JPEG, 70, it) }
+
+        contentValues.clear()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            contentValues.put(MediaStore.Video.Media.IS_PENDING, 0)
+        }
+        imageUri?.let { contentResolver.update(it, contentValues, null, null) }
+
+        return imageUri
     }
 }
