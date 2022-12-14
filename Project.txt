@@ -12,9 +12,12 @@ Problem Komiwojażera
 - Możliwość przechodzenia między widokami
 
 2. Wygląd:
+
 - 2 widoki, żeby pozwolić sobię na wykorzystanie większej przestrzeni ekranu
 
+
 Widok gdzie ustalamy różne rzeczy typu nazwy miast/odległość
+
 - 3 rozwijalne listy:
 	-> 1 do zmiany nazwy miast
 	-> 2 do zmiany dystansu pomiędzy nimi
@@ -25,7 +28,9 @@ Widok gdzie ustalamy różne rzeczy typu nazwy miast/odległość
 	-> 2 przyciski do zapisu zmienionych wartości
 	-> Przycisk do przejścia do widoku głównego
 
+
 Główny widok gdzie sprawdza się najkrótszą trasę
+
 - 3 przyciski:
 	-> Przycisk do wyszukania połączenia
 	-> Przycisk do zapisu obrazu
@@ -33,16 +38,32 @@ Główny widok gdzie sprawdza się najkrótszą trasę
 - Wyświetlenie połączenia które znajdzie algorytm
 
 3. Rozwiązania:
-- Aktuomatyczne skalowanie całej zawartości do ekranu
-- Po uruchomieniu aplikacji wszystkie podstawowe listy są wypełnione startowymi wartościami
+
+Zachowanie itp.:
+
+- Projekt wykonany w Kotlinie + layout przy użyciu xml
+- Aktuomatyczne skalowanie całej zawartości do ekranu (brak hardcodowanych wartości pod względem rozmiarów)
+- Po uruchomieniu aplikacji:
+	==> Dane są wypełnione startowymi wartościami:
+	-> Lista nazw miast
+	-> Lista odległości między miastami
+	==> Widoki wyświetlają przygotowane wartości:
+	-> Listy mają przydzielone listy na których działają
+	-> Inputy mają defaultowe wartości (np. odległość między miastami)
+
+- Przycisk umożliwiający przechodzenie między widokami
+- Po zamknięciu aplikacji nie są wymagane żadne czynności, wszystko włącza się od nowa, gdyż nic nie musi być zapisywane
+- Aplikacja zawsze powinna działać po powrocie (być w ostatnim miejscu, w którym została zatrzymana)
+- Wielkość aplikacji nie ma przekraczać 20 MB
+- Aplikacja nic nie wykonuje w tle (wyjście z apikacji) więc przy wymuszonym zatrzymaniu zachowuje się jak przy normalnym ponownym uruchomieniu aplikacji
+
+Zawartość:
+
 - Startowa lista z miastami o nazwach w stlu (miasto1, miasto2, ...)
 - Umożliwienie zmiany nazwy miast (żeby nie wyświetlać jedynie początkowych nazw)
 - Brak powtórzeń nazw miast (czytelność trasy)
 - Niepoprawne/niemożliwe połączenie to 0 (wyświetla się -1 jako ostrzerzenie)
 - Początkowa lista miast ma mieć standardowo połączenie ze sobą (wszystkie miasta są ze sobą połączone)
 - Input od zmiany odległości ma pokazywać aktualną odległość (jeśli nie została zmodyfikowana przez użytkownika)
-- Przycisk ma wyszukać trasę wykorzystując wcześniej przygotowany algorytm
+- Przycisk ma wyszukać trasę wykorzystując wcześniej przygotowany algorytm, który podaje trasę i łączną odległość
 - Algorytm znajduje najlepsze połączenia (miasto startowe i końcowe) samodzielnie
-- Po zamknięciu aplikacji nie są wymagane żadne czynności, wszystko włącza się od nowa, gdyż nic nie musi być zapisywane
-- Aplikacja zawsze powinna działać po powrocie (być w ostatnim miejscu, w którym została zatrzymana)
-- Projekt wykonany w Kotlinie i xml
