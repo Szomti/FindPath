@@ -9,6 +9,7 @@ Problem Komiwojażera
 - Możliwość zmiany połączeń miast w każdym momencie
 - Możliwość zapisu graficznie (screenshot) ustalonej trasy
 - Zapisanie pliku graficznego na urządzeniu
+- Możliwość przechodzenia między widokami
 
 2. Wygląd:
 - 2 widoki, żeby pozwolić sobię na wykorzystanie większej przestrzeni ekranu
@@ -32,6 +33,8 @@ Główny widok gdzie sprawdza się najkrótszą trasę
 - Wyświetlenie połączenia które znajdzie algorytm
 
 3. Rozwiązania:
+- Aktuomatyczne skalowanie całej zawartości do ekranu
+- Po uruchomieniu aplikacji wszystkie podstawowe listy są wypełnione startowymi wartościami
 - Startowa lista z miastami o nazwach w stlu (miasto1, miasto2, ...)
 - Umożliwienie zmiany nazwy miast (żeby nie wyświetlać jedynie początkowych nazw)
 - Brak powtórzeń nazw miast (czytelność trasy)
@@ -40,3 +43,6 @@ Główny widok gdzie sprawdza się najkrótszą trasę
 - Input od zmiany odległości ma pokazywać aktualną odległość (jeśli nie została zmodyfikowana przez użytkownika)
 - Przycisk ma wyszukać trasę wykorzystując wcześniej przygotowany algorytm
 - Algorytm znajduje najlepsze połączenia (miasto startowe i końcowe) samodzielnie
+- Po zamknięciu aplikacji nie są wymagane żadne czynności, wszystko włącza się od nowa, gdyż nic nie musi być zapisywane
+- Aplikacja zawsze powinna działać po powrocie (być w ostatnim miejscu, w którym została zatrzymana)
+- Projekt wykonany w Kotlinie i xml
