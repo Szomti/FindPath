@@ -4,7 +4,7 @@ class CitiesHelper {
 
     fun distanceInit(graph: MutableList<String>): MutableList<MutableList<Int>> {
         val size = graph.size
-        val tempGraph: MutableList<MutableList<Int>> = MutableList(size) {MutableList(size) {500}}
+        val tempGraph: MutableList<MutableList<Int>> = MutableList(size) {MutableList(size) {5000}}
         for (i in 0 until size){
             tempGraph[i][i] = 0
         }

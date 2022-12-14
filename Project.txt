@@ -1,0 +1,42 @@
+Problem Komiwojażera
+
+1. Funkcjonalność:
+- Wybranie 8 miast (zawsze 8, nie mniej, nie więcej)
+- Wybranie odległości pomiędzy nimi
+- Możliwość ustawienia randomowej odległości
+- Wyświetlenie *prawdopodobnie* najlepszej trasy
+- Możliwość zmiany nazw miast
+- Możliwość zmiany połączeń miast w każdym momencie
+- Możliwość zapisu graficznie (screenshot) ustalonej trasy
+- Zapisanie pliku graficznego na urządzeniu
+
+2. Wygląd:
+- 2 widoki, żeby pozwolić sobię na wykorzystanie większej przestrzeni ekranu
+
+Widok gdzie ustalamy różne rzeczy typu nazwy miast/odległość
+- 3 rozwijalne listy:
+	-> 1 do zmiany nazwy miast
+	-> 2 do zmiany dystansu pomiędzy nimi
+- 2 inputy:
+	-> Do podania nowej nazwy miasta
+	-> (tylko liczby) Do podania/wyświetlenia dystansu pomiędzy wybranymi miastami
+- 3 przyciski:
+	-> 2 przyciski do zapisu zmienionych wartości
+	-> Przycisk do przejścia do widoku głównego
+
+Główny widok gdzie sprawdza się najkrótszą trasę
+- 3 przyciski:
+	-> Przycisk do wyszukania połączenia
+	-> Przycisk do zapisu obrazu
+	-> Przycisk umożliwiający powrót do poprzedniego widoku
+- Wyświetlenie połączenia które znajdzie algorytm
+
+3. Rozwiązania:
+- Startowa lista z miastami o nazwach w stlu (miasto1, miasto2, ...)
+- Umożliwienie zmiany nazwy miast (żeby nie wyświetlać jedynie początkowych nazw)
+- Brak powtórzeń nazw miast (czytelność trasy)
+- Niepoprawne/niemożliwe połączenie to 0 (wyświetla się -1 jako ostrzerzenie)
+- Początkowa lista miast ma mieć standardowo połączenie ze sobą (wszystkie miasta są ze sobą połączone)
+- Input od zmiany odległości ma pokazywać aktualną odległość (jeśli nie została zmodyfikowana przez użytkownika)
+- Przycisk ma wyszukać trasę wykorzystując wcześniej przygotowany algorytm
+- Algorytm znajduje najlepsze połączenia (miasto startowe i końcowe) samodzielnie

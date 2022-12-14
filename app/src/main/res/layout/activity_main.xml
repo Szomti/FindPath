@@ -52,12 +52,15 @@
     <TextView
         android:id="@+id/mainPathResult"
         app:layout_constraintTop_toBottomOf="@+id/mainFindPath"
+        app:layout_constraintBottom_toTopOf="@id/mainGoToSetup"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
         android:textColor="@color/black"
         android:gravity="center"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/mainGoToSetup"

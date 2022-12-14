@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             val resultPath = SimpleTSP(graph).findPath()
             resultPathString += "\nDistance: ${resultPath.getDistance()}\n\n"
             for((i, index) in resultPath.getPath().withIndex()){
-                var endStr = "\n\\/\n"
+                var endStr = "\n\u142F\n"
                 println(index)
                 if(i + 1 == resultPath.getPath().size) endStr = "\n"
                 resultPathString += "${citiesList[index]}$endStr"
